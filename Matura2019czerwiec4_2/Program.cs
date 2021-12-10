@@ -36,37 +36,40 @@ namespace Matura2019czerwiec4_2
         static void Main(string[] args)
         {
             String[][] dane = readFile();
-            int dlugosc = dane.Length;
+            using (StreamWriter writer = new StreamWriter("wyniki4_2.txt")) 
+            { 
+                int[] wartosci = new int [dane.Length];
 
-            for (int i = 0; i < dlugosc; i++)
-            {
-                String[] wiersz = dane[i];
-                int dlugoscWiersza = wiersz.Length;
-                String liczba = wiersz[0];
+                for (int i = 0; i < dane.Length; i++)
+                {
+                    String[] wiersz = dane[i];
+                    String liczba = wiersz[0];
+                    int dlugoscWiersza = liczba.Length;
 
-                String odwrocona = null;
-                int[] wierszwart = new int[dlugoscWiersza];
-                Console.WriteLine(dlugoscWiersza);
-                
-                for ( int j = 0; j <dlugoscWiersza; j++)
+
+                    String odwrocona = null;
+                    Char[] wartosc = new Char[dlugoscWiersza];
+
+                    for (int j = 0; j < dlugoscWiersza; j++)
                     {
-                        wierszwart[j] = Int32.Parse(liczba[j].ToString());
-                    Console.WriteLine(wierszwart[j]);
+                        wartosc[j] = liczba[j];
                     }
-                
-                for ( int k = dlugoscWiersza; k == 2 ; k--)
-                {
-                    odwrocona = odwrocona + wierszwart[k];
-                    Console.WriteLine(odwrocona);
-                }
 
-                int wynik = Int32.Parse(odwrocona.ToString());
+                    do
+                    {
+                        odwrocona += wartosc[dlugoscWiersza - 1];
+                        dlugoscWiersza--;
+                    } while (dlugoscWiersza > 0);
 
-                if (czyPierwsza(wynik))
-                {
-                    Console.WriteLine(wynik);
+                    int wynik = Int32.Parse(odwrocona);
+
+                    if (czyPierwsza(wynik))
+                    {
+                        Console.WriteLine(wartosc);
+                        writer.WriteLine(wartosc);
+                    }
                 }
-            }
+                }
         }
     }
 }
